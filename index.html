@@ -8,6 +8,21 @@
     <title>Pathfinding Visualizer</title>
 </head>
 <body>
-    
+    <div id="gridContainer"></div>
+    <script>
+        let currentHeight = 5;
+        let currentWidth = 0;
+  
+        while (currentHeight < 100) {
+            for (let i = 0; i < 39; i++) {
+                let square = document.createElement('div');
+                //square.setAttribute('id', `${i}`);
+                square.setAttribute('class', `square`);
+                document.getElementById('gridContainer').appendChild(square);
+                currentWidth += 5;
+            }
+            currentHeight += 5;
+        }
+    </script>
 </body>
 </html>

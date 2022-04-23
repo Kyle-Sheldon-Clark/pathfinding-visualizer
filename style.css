@@ -1,0 +1,11 @@
+.square {
+    border: 1px solid black;
+    width: 5vh;
+    height: 5vh;
+}
+
+#gridContainer {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
