@@ -23,4 +23,6 @@ body {
 .square {
     border: 1px solid black;
     box-sizing: border-box;
+    text-decoration: none;
+    background-color: white;
 }
