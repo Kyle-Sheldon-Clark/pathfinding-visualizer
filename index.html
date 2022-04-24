@@ -16,23 +16,26 @@
         let squareWidth = (window.innerHeight-toolbarHeight)/numOfRows;
         let numOfSquaresPerRow = (window.innerWidth/squareWidth);
 
-        for (let i = 0; i < numOfRows; i++) {
-            let row = document.createElement('div');
-            row.setAttribute('class', 'row');
-            document.getElementById('gridContainer').appendChild(row);
-            for (let j = 0; j < numOfSquaresPerRow; j++) {
-                let square = document.createElement('button');
-                square.style.width = `${squareWidth}px`;
-                square.style.height = `${squareWidth}px`;
-                square.setAttribute('class', `square`);
-                square.addEventListener('click', function() {
-                    square.style.backgroundColor = 'green';
-                })
-                row.appendChild(square);
+        function createGrid() {
+            for (let i = 0; i < numOfRows; i++) {
+                let row = document.createElement('div');
+                row.setAttribute('class', 'row');
+                document.getElementById('gridContainer').appendChild(row);
+                for (let j = 0; j < numOfSquaresPerRow; j++) {
+                    let square = document.createElement('button');
+                    square.style.width = `${squareWidth}px`;
+                    square.style.height = `${squareWidth}px`;
+                    square.setAttribute('class', `square`);
+                    square.setAttribute('id', `${i}-${j}`);
+                    square.addEventListener('click', function() {
+                        square.style.backgroundColor = 'green';
+                    })
+                    row.appendChild(square);
+                }
             }
         }
   
-      
+        createGrid();
     </script>
 </body>
 </html>
