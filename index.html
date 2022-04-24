@@ -8,10 +8,12 @@
     <title>Pathfinding Visualizer</title>
 </head>
 <body>
+    <div id="toolbar"></div>
     <div id="gridContainer"></div>
     <script>
         let numOfRows = 40;
-        let squareWidth = (window.innerHeight/numOfRows);
+        let toolbarHeight = document.getElementById('toolbar').clientHeight;
+        let squareWidth = (window.innerHeight-toolbarHeight)/numOfRows;
         let numOfSquaresPerRow = (window.innerWidth/squareWidth);
 
         for (let i = 0; i < numOfRows; i++) {
