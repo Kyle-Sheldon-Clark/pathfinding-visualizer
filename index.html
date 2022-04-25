@@ -50,6 +50,9 @@
                     document.getElementById(`${i}-${j}`).classList.add('disabled');
                 } 
             }
+            let randomRow = Math.floor(Math.random()*(numOfRows-1) + 1);
+            let randomColumn = Math.floor(Math.random()*(numOfSquaresPerRow-1) + 1);
+            document.getElementById(`${randomRow}-${randomColumn}`).classList.remove('disabled');
         }
   
         createGrid();
