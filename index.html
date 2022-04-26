@@ -50,9 +50,27 @@
                     document.getElementById(`${i}-${j}`).classList.add('disabled');
                 } 
             }
-            let randomRow = Math.floor(Math.random()*(numOfRows-1) + 1);
-            let randomColumn = Math.floor(Math.random()*(numOfSquaresPerRow-1) + 1);
+            let randomRow = Math.floor(Math.random()*((numOfRows-1)-1) + 1);
+            let randomColumn = Math.floor(Math.random()*((numOfSquaresPerRow-1)-1) + 1);
             document.getElementById(`${randomRow}-${randomColumn}`).classList.remove('disabled');
+            wallsToCheck(randomRow, randomColumn);
+        }
+
+        function wallsToCheck(selectedRow, selectedColumn) {
+            let wallsToCheckList = [];
+            if (selectedRow > 1) {
+                wallsToCheckList.push(`${selectedRow-1}-${selectedColumn}`);
+            }
+            if (selectedColumn < numOfSquaresPerRow-2) {
+                wallsToCheckList.push(`${selectedRow}-${selectedColumn+1}`);
+            }
+            if (selectedRow < numOfRows - 2) {
+                wallsToCheckList.push(`${selectedRow+1}-${selectedColumn}`);
+            }
+            if (selectedColumn > 1) {
+                wallsToCheckList.push(`${selectedRow}-${selectedColumn-1}`);
+            }
+            console.log(wallsToCheckList);
         }
   
         createGrid();
