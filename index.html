@@ -44,6 +44,8 @@
             }
         }
 
+        let wallsToCheck = [];
+
         function primsMaze() {
             for (let i = 0; i < numOfRows; i++) {
                 for (let j = 0; j < numOfSquaresPerRow; j++) {
@@ -53,24 +55,100 @@
             let randomRow = Math.floor(Math.random()*((numOfRows-1)-1) + 1);
             let randomColumn = Math.floor(Math.random()*((numOfSquaresPerRow-1)-1) + 1);
             document.getElementById(`${randomRow}-${randomColumn}`).classList.remove('disabled');
-            wallsToCheck(randomRow, randomColumn);
+            let currentNeighbours = getNeighbours(randomRow, randomColumn);
+            for (let k = 0; k < currentNeighbours.length; k++) {
+                wallsToCheck.push(currentNeighbours[k]);
+            }
+            while (wallsToCheck.length > 0) {
+                    let randomWallIndex = Math.floor(Math.random()*(wallsToCheck.length-1));
+                    let randomWall = wallsToCheck[randomWallIndex].split('-');
+                    evaluateWall(parseInt(randomWall[0]), parseInt(randomWall[1]));
+                    wallsToCheck.splice(randomWallIndex, 1);
+            }
         }
 
-        function wallsToCheck(selectedRow, selectedColumn) {
-            let wallsToCheckList = [];
+        function getNeighbours(selectedRow, selectedColumn) {
+            let neighbours = [];
             if (selectedRow > 1) {
-                wallsToCheckList.push(`${selectedRow-1}-${selectedColumn}`);
+                neighbours.push(`${selectedRow-1}-${selectedColumn}`);
             }
-            if (selectedColumn < numOfSquaresPerRow-2) {
-                wallsToCheckList.push(`${selectedRow}-${selectedColumn+1}`);
+            if (selectedColumn < numOfSquaresPerRow - 3) {
+                neighbours.push(`${selectedRow}-${selectedColumn+1}`);
             }
             if (selectedRow < numOfRows - 2) {
-                wallsToCheckList.push(`${selectedRow+1}-${selectedColumn}`);
+                neighbours.push(`${selectedRow+1}-${selectedColumn}`);
             }
             if (selectedColumn > 1) {
-                wallsToCheckList.push(`${selectedRow}-${selectedColumn-1}`);
+                neighbours.push(`${selectedRow}-${selectedColumn-1}`);
             }
-            console.log(wallsToCheckList);
+            return neighbours;
+        }
+
+        function getNeighbourInfo(selectedRow, selectedColumn) {
+            let neighbours = getNeighbours(selectedRow, selectedColumn);
+            let neighboursNotInMaze = [];
+            let neighboursInMaze = [];
+            for (let i = 0; i < neighbours.length; i++) {
+                let currentSquareId = neighbours[i].split('-');
+                if (!document.getElementById(`${currentSquareId[0]}-${currentSquareId[1]}`).classList.contains('disabled')) {
+                    neighboursInMaze.push(neighbours[i]);
+                } else {
+                    neighboursNotInMaze.push(neighbours[i]);
+                }
+            }
+            return [neighboursInMaze, neighboursNotInMaze, neighbours];
+        }
+
+        function evaluateWall(selectedRow, selectedColumn) {
+            //if only one of the cells the wall divides is visited
+            //make wall a passage and mark unvisited cell as part of maze
+            //add all neighbours to wallsToCheckList
+            //remove wall from wall to check list
+            let neighbourInfo = getNeighbourInfo(selectedRow, selectedColumn)
+            if (neighbourInfo[0].length <= 1) {
+                let neighbourToInsertInfo;
+                
+                document.getElementById(`${selectedRow}-${selectedColumn}`).classList.remove('disabled');
+                let neighbourInMaze = neighbourInfo[0][0].split('-');
+                if (neighbourInMaze[0] > selectedRow && neighbourInfo[2].includes(`${selectedRow-1}-${selectedColumn}`)) {
+                    neighbourToInsertInfo = getNeighbourInfo(selectedRow-1, selectedColumn);
+                    if (neighbourToInsertInfo[0].length <= 1) {
+                        document.getElementById(`${selectedRow-1}-${selectedColumn}`).classList.remove('disabled');
+                        for (let i = 0; i < neighbourToInsertInfo[1].length; i++) {
+                            wallsToCheck.push(neighbourToInsertInfo[1][i]);
+                        }
+                    }
+                    
+                } else if (neighbourInMaze[1] < selectedColumn && neighbourInfo[2].includes(`${selectedRow}-${selectedColumn+1}`)) {
+                    neighbourToInsertInfo = getNeighbourInfo(selectedRow, selectedColumn+1);
+                    if (neighbourToInsertInfo[0].length <= 1) {
+                        document.getElementById(`${selectedRow}-${selectedColumn+1}`).classList.remove('disabled'); 
+                        for (let i = 0; i < neighbourToInsertInfo[1].length; i++) {
+                            wallsToCheck.push(neighbourToInsertInfo[1][i]);
+                        }
+                    }
+                    
+                } else if (neighbourInMaze[0] < selectedRow && neighbourInfo[2].includes(`${selectedRow+1}-${selectedColumn}`)) {
+                    neighbourToInsertInfo = getNeighbourInfo(selectedRow+1, selectedColumn);
+                    if (neighbourToInsertInfo[0].length <= 1) {
+                        document.getElementById(`${selectedRow+1}-${selectedColumn}`).classList.remove('disabled');
+                        for (let i = 0; i < neighbourToInsertInfo[1].length; i++) {
+                            wallsToCheck.push(neighbourToInsertInfo[1][i]);
+                        }
+                    }
+                    
+                } else if (neighbourInMaze[1] > selectedColumn && neighbourInfo[2].includes(`${selectedRow}-${selectedColumn-1}`)) {
+                    neighbourToInsertInfo = getNeighbourInfo(selectedRow, selectedColumn-1);
+                    if (neighbourToInsertInfo[0].length <= 1) {
+                        document.getElementById(`${selectedRow}-${selectedColumn-1}`).classList.remove('disabled'); 
+                        for (let i = 0; i < neighbourToInsertInfo[1].length; i++) {
+                            wallsToCheck.push(neighbourToInsertInfo[1][i]);
+                        }
+                    }
+                }
+                return true;
+            }
+            return false;
         }
   
         createGrid();
