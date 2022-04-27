@@ -8,7 +8,9 @@
     <title>Pathfinding Visualizer</title>
 </head>
 <body>
-    <div id="toolbar"></div>
+    <div id="toolbar">
+        <button id="generatePrimsMaze">Generate Prims Maze</button>
+    </div>
     <div id="gridContainer"></div>
     <script>
         let numOfRows = 40;
@@ -139,9 +141,9 @@
         }
   
         createGrid();
-        //TODO - Add button to create prims maze
+        let generatePrimsMaze = document.getElementById('generatePrimsMaze');
+        generatePrimsMaze.addEventListener('click', primsMaze);
         //TODO - Add animation to see every step of building prims maze
-        primsMaze();
     </script>
 </body>
 </html>
