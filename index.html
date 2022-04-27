@@ -44,8 +44,10 @@
             }
         }
 
+
         let wallsToCheck = [];
 
+        //Biggest trouble with prims maze was getting it to work with cells as walls
         function primsMaze() {
             for (let i = 0; i < numOfRows; i++) {
                 for (let j = 0; j < numOfSquaresPerRow; j++) {
@@ -105,53 +107,40 @@
             //add all neighbours to wallsToCheckList
             //remove wall from wall to check list
             let neighbourInfo = getNeighbourInfo(selectedRow, selectedColumn)
-            if (neighbourInfo[0].length <= 1) {
-                let neighbourToInsertInfo;
-                
+            if (neighbourInfo[0].length <= 1) {  
+
                 document.getElementById(`${selectedRow}-${selectedColumn}`).classList.remove('disabled');
                 let neighbourInMaze = neighbourInfo[0][0].split('-');
+
                 if (neighbourInMaze[0] > selectedRow && neighbourInfo[2].includes(`${selectedRow-1}-${selectedColumn}`)) {
-                    neighbourToInsertInfo = getNeighbourInfo(selectedRow-1, selectedColumn);
-                    if (neighbourToInsertInfo[0].length <= 1) {
-                        document.getElementById(`${selectedRow-1}-${selectedColumn}`).classList.remove('disabled');
-                        for (let i = 0; i < neighbourToInsertInfo[1].length; i++) {
-                            wallsToCheck.push(neighbourToInsertInfo[1][i]);
-                        }
-                    }
+                    addSquareToMaze(selectedRow-1, selectedColumn);
                     
                 } else if (neighbourInMaze[1] < selectedColumn && neighbourInfo[2].includes(`${selectedRow}-${selectedColumn+1}`)) {
-                    neighbourToInsertInfo = getNeighbourInfo(selectedRow, selectedColumn+1);
-                    if (neighbourToInsertInfo[0].length <= 1) {
-                        document.getElementById(`${selectedRow}-${selectedColumn+1}`).classList.remove('disabled'); 
-                        for (let i = 0; i < neighbourToInsertInfo[1].length; i++) {
-                            wallsToCheck.push(neighbourToInsertInfo[1][i]);
-                        }
-                    }
+                    addSquareToMaze(selectedRow, selectedColumn+1);
                     
                 } else if (neighbourInMaze[0] < selectedRow && neighbourInfo[2].includes(`${selectedRow+1}-${selectedColumn}`)) {
-                    neighbourToInsertInfo = getNeighbourInfo(selectedRow+1, selectedColumn);
-                    if (neighbourToInsertInfo[0].length <= 1) {
-                        document.getElementById(`${selectedRow+1}-${selectedColumn}`).classList.remove('disabled');
-                        for (let i = 0; i < neighbourToInsertInfo[1].length; i++) {
-                            wallsToCheck.push(neighbourToInsertInfo[1][i]);
-                        }
-                    }
+                    addSquareToMaze(selectedRow+1, selectedColumn);
                     
                 } else if (neighbourInMaze[1] > selectedColumn && neighbourInfo[2].includes(`${selectedRow}-${selectedColumn-1}`)) {
-                    neighbourToInsertInfo = getNeighbourInfo(selectedRow, selectedColumn-1);
-                    if (neighbourToInsertInfo[0].length <= 1) {
-                        document.getElementById(`${selectedRow}-${selectedColumn-1}`).classList.remove('disabled'); 
-                        for (let i = 0; i < neighbourToInsertInfo[1].length; i++) {
-                            wallsToCheck.push(neighbourToInsertInfo[1][i]);
-                        }
-                    }
+                    addSquareToMaze(selectedRow, selectedColumn-1);
                 }
-                return true;
             }
-            return false;
+        }
+        
+        function addSquareToMaze(squareRow, squareColumn) {
+            let squareNeighboursInfo = getNeighbourInfo(squareRow, squareColumn);
+            //if there is one or fewer neighbours that are already in the maze add square to maze and add all neighbours not currently in the maze to the wallsToCheck array
+            if (squareNeighboursInfo[0].length <= 1) {
+                document.getElementById(`${squareRow}-${squareColumn}`).classList.remove('disabled'); 
+                for (let i = 0; i < squareNeighboursInfo[1].length; i++) {
+                    wallsToCheck.push(squareNeighboursInfo[1][i]);
+                }
+            }
         }
   
         createGrid();
+        //TODO - Add button to create prims maze
+        //TODO - Add animation to see every step of building prims maze
         primsMaze();
     </script>
 </body>
