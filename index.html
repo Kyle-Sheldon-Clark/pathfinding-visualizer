@@ -43,7 +43,12 @@
         }
 
         function handleSquareClick(currentSquare) {
-            if (placingSourceNode) {
+            if (currentSquare.id === sourceSquareId) {
+                placingSourceNode = true;
+                sourceNodeSelected = false;
+                sourceSquareId = '';
+                currentSquare.classList.remove('source');
+            } else if (placingSourceNode) {
                 sourceSquareId = currentSquare.id;
                 currentSquare.classList.add('source');
                 sourceNodeSelected = true;
