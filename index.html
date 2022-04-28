@@ -10,6 +10,7 @@
 <body>
     <div id="toolbar">
         <button id="generatePrimsMaze">Generate Prims Maze</button>
+        <button id="placeSourceNode">Place Source Node</button>
     </div>
     <div id="gridContainer"></div>
     <script>
@@ -17,6 +18,9 @@
         let toolbarHeight = document.getElementById('toolbar').clientHeight;
         let squareWidth = (window.innerHeight-toolbarHeight)/numOfRows;
         let numOfSquaresPerRow = (window.innerWidth/squareWidth);
+        let placingSourceNode = false;
+        let sourceNodeSelected = false;
+        let sourceSquareId;
 
         function createGrid() {
             for (let i = 0; i < numOfRows; i++) {
@@ -31,15 +35,20 @@
                     square.setAttribute('id', `${i}-${j}`);
                     square.disabled = false;
                     square.addEventListener('click', function() {
-                        toggleSquare(square);
+                        handleSquareClick(square);
                     });
                     row.appendChild(square);
                 }
             }
         }
 
-        function toggleSquare(currentSquare) {
-            if (currentSquare.classList.contains('disabled')) {
+        function handleSquareClick(currentSquare) {
+            if (placingSourceNode) {
+                sourceSquareId = currentSquare.id;
+                currentSquare.classList.add('source');
+                sourceNodeSelected = true;
+                placingSourceNode = false;
+            } else if (currentSquare.classList.contains('disabled')) {
                 currentSquare.classList.remove('disabled');
             } else {
                 currentSquare.classList.add('disabled');
@@ -121,7 +130,7 @@
                 document.getElementById(`${selectedRow}-${selectedColumn}`).classList.remove('disabled');
                 setTimeout(function() {
                     document.getElementById(`${selectedRow}-${selectedColumn}`).classList.remove('green');
-                    counter += 1000;
+                    counter *= 2;
                 }, counter);
                 let neighbourInMaze = neighbourInfo[0][0].split('-');
 
@@ -146,9 +155,9 @@
             if (squareNeighboursInfo[0].length <= 1) {
                 document.getElementById(`${squareRow}-${squareColumn}`).classList.remove('disabled'); 
                 setTimeout(function() {
-                document.getElementById(`${squareRow}-${squareColumn}`).classList.remove('green');
-                counter += 1000;
-            }, counter);
+                    document.getElementById(`${squareRow}-${squareColumn}`).classList.remove('green');
+                    counter *= 2;
+                }, counter);
                 for (let i = 0; i < squareNeighboursInfo[1].length; i++) {
                     wallsToCheck.push(squareNeighboursInfo[1][i]);
                 }
@@ -158,6 +167,10 @@
         createGrid();
         let generatePrimsMaze = document.getElementById('generatePrimsMaze');
         generatePrimsMaze.addEventListener('click', primsMaze);
+        let placeSourceNode = document.getElementById('placeSourceNode');
+        placeSourceNode.addEventListener('click', function() {
+            placingSourceNode = true;
+        });
         //TODO - Add animation to see every step of building prims maze
     </script>
 </body>
