@@ -11,6 +11,7 @@
     <div id="toolbar">
         <button id="generatePrimsMaze">Generate Prims Maze</button>
         <button id="placeSourceNode">Place Source Node</button>
+        <button id="placeTargetNode">Place Target Node</button>
         <button id="placeWallNode">Place Wall Node</button>
     </div>
     <div id="gridContainer"></div>
@@ -21,7 +22,9 @@
         let numOfSquaresPerRow = (window.innerWidth/squareWidth);
         let squareToPlaceType = 'wall';
         let sourceNodeSelected = false;
-        let sourceSquareId;
+        let sourceSquareId = '';
+        let targetNodeSelected = false;
+        let targetSquareId = '';
 
         function createGrid() {
             for (let i = 0; i < numOfRows; i++) {
@@ -44,12 +47,13 @@
         }
 
         function handleSquareClick(currentSquare) {
+            console.log(squareToPlaceType)
             if (currentSquare.id === sourceSquareId) {
                 squareToPlaceType = 'source';
                 sourceNodeSelected = false;
                 sourceSquareId = '';
                 currentSquare.classList.remove('source');
-                document.getElementById('placeSourceNode').disabled = true;
+                document.getElementById('placeSourceNode').disabled = false;
             } else if (squareToPlaceType === 'source') {
                 squareToPlaceType = 'wall';
                 sourceNodeSelected = true;
@@ -58,6 +62,22 @@
                 if (currentSquare.classList.contains('wall')) {
                     currentSquare.classList.remove('wall');
                 }
+                document.getElementById('placeSourceNode').disabled = true;
+            } else if (currentSquare.id === targetSquareId) {
+                squareToPlaceType = 'target';
+                targetNodeSelected = false;
+                targetSquareId = '';
+                currentSquare.classList.remove('target');
+                document.getElementById('placeTargetNode').disabled = false;
+            } else if (squareToPlaceType === 'target') {
+                squareToPlaceType = 'wall';
+                targetNodeSelected = true;
+                targetSquareId = currentSquare.id;
+                currentSquare.classList.add('target');
+                if (currentSquare.classList.contains('wall')) {
+                    currentSquare.classList.remove('wall');
+                }
+                document.getElementById('placeTargetNode').disabled = true;
             } else if (squareToPlaceType === 'wall' && !currentSquare.classList.contains('wall')) {
                 currentSquare.classList.add('wall');
             } else {
@@ -180,6 +200,10 @@
         let placeSourceNode = document.getElementById('placeSourceNode');
         placeSourceNode.addEventListener('click', function() {
             squareToPlaceType = 'source';
+        });
+        let placeTargetNode = document.getElementById('placeTargetNode');
+        placeTargetNode.addEventListener('click', function() {
+            squareToPlaceType = 'target';
         });
         let placeWallNode = document.getElementById('placeWallNode');
         placeWallNode.addEventListener('click', function() {

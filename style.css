@@ -48,3 +48,7 @@ body {
 .source {
     background-color: red;
 }
+
+.target {
+    background-color: blue;
+}
