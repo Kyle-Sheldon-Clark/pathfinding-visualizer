@@ -11,6 +11,7 @@
     <div id="toolbar">
         <button id="generatePrimsMaze">Generate Prims Maze</button>
         <button id="placeSourceNode">Place Source Node</button>
+        <button id="placeWallNode">Place Wall Node</button>
     </div>
     <div id="gridContainer"></div>
     <script>
@@ -18,7 +19,7 @@
         let toolbarHeight = document.getElementById('toolbar').clientHeight;
         let squareWidth = (window.innerHeight-toolbarHeight)/numOfRows;
         let numOfSquaresPerRow = (window.innerWidth/squareWidth);
-        let placingSourceNode = false;
+        let squareToPlaceType = 'wall';
         let sourceNodeSelected = false;
         let sourceSquareId;
 
@@ -44,19 +45,23 @@
 
         function handleSquareClick(currentSquare) {
             if (currentSquare.id === sourceSquareId) {
-                placingSourceNode = true;
+                squareToPlaceType = 'source';
                 sourceNodeSelected = false;
                 sourceSquareId = '';
                 currentSquare.classList.remove('source');
-            } else if (placingSourceNode) {
+                document.getElementById('placeSourceNode').disabled = true;
+            } else if (squareToPlaceType === 'source') {
+                squareToPlaceType = 'wall';
+                sourceNodeSelected = true;
                 sourceSquareId = currentSquare.id;
                 currentSquare.classList.add('source');
-                sourceNodeSelected = true;
-                placingSourceNode = false;
-            } else if (currentSquare.classList.contains('disabled')) {
-                currentSquare.classList.remove('disabled');
+                if (currentSquare.classList.contains('wall')) {
+                    currentSquare.classList.remove('wall');
+                }
+            } else if (squareToPlaceType === 'wall' && !currentSquare.classList.contains('wall')) {
+                currentSquare.classList.add('wall');
             } else {
-                currentSquare.classList.add('disabled');
+                currentSquare.classList.remove('wall');
             }
         }
 
@@ -174,7 +179,11 @@
         generatePrimsMaze.addEventListener('click', primsMaze);
         let placeSourceNode = document.getElementById('placeSourceNode');
         placeSourceNode.addEventListener('click', function() {
-            placingSourceNode = true;
+            squareToPlaceType = 'source';
+        });
+        let placeWallNode = document.getElementById('placeWallNode');
+        placeWallNode.addEventListener('click', function() {
+            squareToPlaceType = 'wall';
         });
         //TODO - Add animation to see every step of building prims maze
     </script>
