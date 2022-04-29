@@ -47,7 +47,6 @@
         }
 
         function handleSquareClick(currentSquare) {
-            console.log(squareToPlaceType)
             if (currentSquare.id === sourceSquareId) {
                 squareToPlaceType = 'source';
                 sourceNodeSelected = false;
@@ -83,6 +82,26 @@
             } else {
                 currentSquare.classList.remove('wall');
             }
+        }
+
+        function djikstraSearch() {
+            /*mark all nodes as unvisited, create a set of all unvisited nodes
+              assign every node a distance from start value
+              mark initial node as current node
+              for current node
+                consider all neighbouring nodes
+                update neighbouring node's distance with distance from current node
+                plus current node's distance from start
+                when all neighbours have been checked and updated mark current node
+                as visited and remove from strSet
+              If target node has been marked as visited the program stops. The algorithm is finished
+              Otherwise take smallest node from strSet, mark as current node and repeat*/
+
+              for (let i = 0; i < numOfRows; i++) {
+                  for (let j = 0; j < numOfSquaresPerRow; j++) {
+                      document.getElementById(`${i}-${j}`).classList.add('unvisited');
+                  }
+              }
         }
 
 
