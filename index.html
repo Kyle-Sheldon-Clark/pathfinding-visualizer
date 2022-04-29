@@ -84,6 +84,9 @@
             }
         }
 
+
+        let unvisitedSquares = [];
+
         function djikstraSearch() {
             /*mark all nodes as unvisited, create a set of all unvisited nodes
               assign every node a distance from start value
@@ -100,6 +103,12 @@
               for (let i = 0; i < numOfRows; i++) {
                   for (let j = 0; j < numOfSquaresPerRow; j++) {
                       document.getElementById(`${i}-${j}`).classList.add('unvisited');
+                      unvisitedSquares.push(
+                          {
+                              id: `${i}-${j}`,
+                              distanceFromStart: Infinity,
+                          }
+                      )
                   }
               }
         }
@@ -214,6 +223,7 @@
         }
   
         createGrid();
+        djikstraSearch();
         let generatePrimsMaze = document.getElementById('generatePrimsMaze');
         generatePrimsMaze.addEventListener('click', primsMaze);
         let placeSourceNode = document.getElementById('placeSourceNode');
@@ -229,6 +239,8 @@
             squareToPlaceType = 'wall';
         });
         //TODO - Add animation to see every step of building prims maze
+
+
     </script>
 </body>
 </html>
