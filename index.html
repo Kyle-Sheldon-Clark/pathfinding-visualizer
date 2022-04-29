@@ -35,13 +35,15 @@
                     let square = document.createElement('div');
                     square.style.width = `${squareWidth}px`;
                     square.style.height = `${squareWidth}px`;
-                    square.setAttribute('class', `square`);
+                    square.classList.add(`square`);
+                    square.classList.add('unvisited')
                     square.setAttribute('id', `${i}-${j}`);
                     square.disabled = false;
                     square.addEventListener('click', function() {
                         handleSquareClick(square);
                     });
                     row.appendChild(square);
+                    buildDjikstraGraph(`${i}-${j}`);
                 }
             }
         }
@@ -86,6 +88,13 @@
 
 
         let unvisitedSquares = [];
+        function buildDjikstraGraph(name) {
+            unvisitedSquares.push({
+                name: name,
+                distanceFromStart: Infinity,
+            })
+        }
+
 
         function djikstraSearch() {
             /*mark all nodes as unvisited, create a set of all unvisited nodes
@@ -100,17 +109,7 @@
               If target node has been marked as visited the program stops. The algorithm is finished
               Otherwise take smallest node from strSet, mark as current node and repeat*/
 
-              for (let i = 0; i < numOfRows; i++) {
-                  for (let j = 0; j < numOfSquaresPerRow; j++) {
-                      document.getElementById(`${i}-${j}`).classList.add('unvisited');
-                      unvisitedSquares.push(
-                          {
-                              id: `${i}-${j}`,
-                              distanceFromStart: Infinity,
-                          }
-                      )
-                  }
-              }
+            
         }
 
 
