@@ -95,6 +95,14 @@
             })
         }
 
+        function findSquareByName(name) {
+            let squareToFind = name.split('-');
+            let squareRow = squareToFind[0];
+            let squareColumn = squareToFind[1];
+            let squareIndex = (squareRow*numOfSquaresPerRow) + squareColumn;
+            return unvisitedSquares[squareIndex];
+        }
+
 
         function djikstraSearch() {
             /*mark all nodes as unvisited, create a set of all unvisited nodes
