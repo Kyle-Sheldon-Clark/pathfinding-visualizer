@@ -19,7 +19,7 @@
         let numOfRows = 40;
         let toolbarHeight = document.getElementById('toolbar').clientHeight;
         let squareWidth = (window.innerHeight-toolbarHeight)/numOfRows;
-        let numOfSquaresPerRow = (window.innerWidth/squareWidth);
+        let numOfSquaresPerRow = Math.floor((window.innerWidth/squareWidth));
         let squareToPlaceType = 'wall';
         let sourceNodeSelected = false;
         let sourceSquareId = '0-0';
@@ -117,14 +117,20 @@
               If target node has been marked as visited the program stops. The algorithm is finished
               Otherwise take smallest node from strSet, mark as current node and repeat*/
             let currentSquare = findSquareByName(sourceSquareId);
+            currentSquare.distanceFromStart = 1;
             let currentSquareId = currentSquare.name.split('-');
-            let neighbours = getNeighbours(currentSquare[0], [1]);
+            let neighbours = getNeighbours(parseInt(currentSquareId[0]), parseInt(currentSquareId[1]));
+            let currentNeighbour;
             for (let i = 0; i < neighbours.length; i++) {
-                updateNeighbourDistance(i, currentSquare.distanceFromStart);
+                currentNeighbour = findSquareByName(neighbours[i]);
+                currentNeighbour.distanceFromStart = 1;
+                updateNeighbourDistance(currentNeighbour, currentSquare.distanceFromStart);
             }
         }
 
-
+        function updateNeighbourDistance(squareToUpdate, currentDistanceFromStart) {
+            squareToUpdate.distanceFromStart = currentDistanceFromStart + squareToUpdate.distanceFromStart;
+        }
 
 
         let wallsToCheck = [];
