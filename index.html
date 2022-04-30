@@ -126,10 +126,21 @@
                 currentNeighbour.distanceFromStart = 1;
                 updateNeighbourDistance(currentNeighbour, currentSquare.distanceFromStart);
             }
+            markAsVisited(currentSquare);
         }
 
         function updateNeighbourDistance(squareToUpdate, currentDistanceFromStart) {
             squareToUpdate.distanceFromStart = currentDistanceFromStart + squareToUpdate.distanceFromStart;
+        }
+
+        function markAsVisited(visitedSquare) {
+            let visitedSquareId = visitedSquare.name.split('-');
+            let visitedSquareRow = visitedSquareId[0];
+            let visitedSquareColumn = visitedSquareId[1];
+            let visitedSquareIndex = (parseInt(visitedSquareRow)*numOfSquaresPerRow) + parseInt(visitedSquareColumn);
+            document.getElementById(`${visitedSquareRow}-${visitedSquareColumn}`).classList.remove('unvisited');
+            document.getElementById(`${visitedSquareRow}-${visitedSquareColumn}`).classList.add('visited');
+            unvisitedSquares.splice(visitedSquareIndex, 1);
         }
 
 
