@@ -22,7 +22,7 @@
         let numOfSquaresPerRow = (window.innerWidth/squareWidth);
         let squareToPlaceType = 'wall';
         let sourceNodeSelected = false;
-        let sourceSquareId = '';
+        let sourceSquareId = '0-0';
         let targetNodeSelected = false;
         let targetSquareId = '';
 
@@ -99,7 +99,7 @@
             let squareToFind = name.split('-');
             let squareRow = squareToFind[0];
             let squareColumn = squareToFind[1];
-            let squareIndex = (squareRow*numOfSquaresPerRow) + squareColumn;
+            let squareIndex = (parseInt(squareRow)*numOfSquaresPerRow) + parseInt(squareColumn);
             return unvisitedSquares[squareIndex];
         }
 
@@ -110,15 +110,21 @@
               mark initial node as current node
               for current node
                 consider all neighbouring nodes
-                update neighbouring node's distance with distance from current node
+                update neighbouring nodes distance with distance from current node
                 plus current node's distance from start
                 when all neighbours have been checked and updated mark current node
                 as visited and remove from strSet
               If target node has been marked as visited the program stops. The algorithm is finished
               Otherwise take smallest node from strSet, mark as current node and repeat*/
-
-            
+            let currentSquare = findSquareByName(sourceSquareId);
+            let currentSquareId = currentSquare.name.split('-');
+            let neighbours = getNeighbours(currentSquare[0], [1]);
+            for (let i = 0; i < neighbours.length; i++) {
+                updateNeighbourDistance(i, currentSquare.distanceFromStart);
+            }
         }
+
+
 
 
         let wallsToCheck = [];
