@@ -104,6 +104,8 @@
         }
 
 
+        //biggest difficulty keeping track of unvisited squares and being able to find a given square without searching through entire array
+        //Accomplished this by marking squares as visited in unvisited array and finding it in the array with the index using the equation (squareRow*numberOfSquareRows)+squareColumn
         function djikstraSearch() {
             /*mark all nodes as unvisited, create a set of all unvisited nodes
               assign every node a distance from start value
@@ -130,6 +132,10 @@
 
             while (!targetFound) {
                 let currentSquare = getSquareWithShortestDistance();
+                if (currentSquare.name == targetSquareId) {
+                    targetFound = true;
+                    break;
+                }
                 let currentSquareId = currentSquare.name.split('-');
                 document.getElementById(`${currentSquareId[0]}-${currentSquareId[1]}`).style.backgroundColor = 'purple';
                 let neighbours = getDjikstraNeighbours(parseInt(currentSquareId[0]), parseInt(currentSquareId[1]));
@@ -138,9 +144,6 @@
                     updateNeighbourDistance(neighbours[i], currentSquare.distanceFromStart);
                 }
                 markAsVisited(currentSquare);
-                if (currentSquare.name == targetSquareId) {
-                    targetFound = true;
-                }
             }
         }
 
@@ -175,6 +178,7 @@
             unvisitedSquares[visitedSquareIndex] = 'visited';
         }
 
+        //TODO - Figure out how to search through just the unvisited squares to find smallest instead of all including visited
         function getSquareWithShortestDistance() {
             let shortestDistanceFromStart = Infinity;
             let smallestSquare;
