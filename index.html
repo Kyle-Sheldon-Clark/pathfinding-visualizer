@@ -118,6 +118,12 @@
                 as visited and remove from strSet
               If target node has been marked as visited the program stops. The algorithm is finished
               Otherwise take smallest node from strSet, mark as current node and repeat*/
+
+            document.getElementById(sourceSquareId).classList.add('source');
+            document.getElementById(targetSquareId).classList.add('target');
+
+
+
             let initialSquare = findSquareByName(sourceSquareId);
             initialSquare.distanceFromStart = 1;
             let initialSquareId = initialSquare.name.split('-');
