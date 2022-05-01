@@ -9,6 +9,7 @@
 </head>
 <body>
     <div id="toolbar">
+        <button id="startDjikstraSearch">Start Djikstra Search</button>
         <button id="generatePrimsMaze">Generate Prims Maze</button>
         <button id="placeSourceNode">Place Source Node</button>
         <button id="placeTargetNode">Place Target Node</button>
@@ -307,7 +308,9 @@
         }
   
         createGrid();
-        djikstraSearch();
+        
+        let startDjikstraSearch = document.getElementById('startDjikstraSearch');
+        startDjikstraSearch.addEventListener('click', djikstraSearch);
         let generatePrimsMaze = document.getElementById('generatePrimsMaze');
         generatePrimsMaze.addEventListener('click', primsMaze);
         let placeSourceNode = document.getElementById('placeSourceNode');
