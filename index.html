@@ -24,7 +24,7 @@
         let sourceNodeSelected = false;
         let sourceSquareId = '0-0';
         let targetNodeSelected = false;
-        let targetSquareId = '';
+        let targetSquareId = '5-5';
 
         function createGrid() {
             for (let i = 0; i < numOfRows; i++) {
@@ -116,17 +116,49 @@
                 as visited and remove from strSet
               If target node has been marked as visited the program stops. The algorithm is finished
               Otherwise take smallest node from strSet, mark as current node and repeat*/
-            let currentSquare = findSquareByName(sourceSquareId);
-            currentSquare.distanceFromStart = 1;
-            let currentSquareId = currentSquare.name.split('-');
-            let neighbours = getNeighbours(parseInt(currentSquareId[0]), parseInt(currentSquareId[1]));
-            let currentNeighbour;
-            for (let i = 0; i < neighbours.length; i++) {
-                currentNeighbour = findSquareByName(neighbours[i]);
-                currentNeighbour.distanceFromStart = 1;
-                updateNeighbourDistance(currentNeighbour, currentSquare.distanceFromStart);
+            let initialSquare = findSquareByName(sourceSquareId);
+            initialSquare.distanceFromStart = 1;
+            let initialSquareId = initialSquare.name.split('-');
+            let initialNeighbours = getDjikstraNeighbours(parseInt(initialSquareId[0]), parseInt(initialSquareId[1]));
+            for (let i = 0; i < initialNeighbours.length; i++) {
+                initialNeighbours[i].distanceFromStart = 1;
+                updateNeighbourDistance(initialNeighbours[i], initialSquare.distanceFromStart);
             }
-            markAsVisited(currentSquare);
+            markAsVisited(initialSquare);
+
+            let targetFound = false;
+
+            while (!targetFound) {
+                let currentSquare = getSquareWithShortestDistance();
+                let currentSquareId = currentSquare.name.split('-');
+                document.getElementById(`${currentSquareId[0]}-${currentSquareId[1]}`).style.backgroundColor = 'purple';
+                let neighbours = getDjikstraNeighbours(parseInt(currentSquareId[0]), parseInt(currentSquareId[1]));
+                for (let i = 0; i < neighbours.length; i++) {
+                    neighbours[i].distanceFromStart = 1;
+                    updateNeighbourDistance(neighbours[i], currentSquare.distanceFromStart);
+                }
+                markAsVisited(currentSquare);
+                if (currentSquare.name == targetSquareId) {
+                    targetFound = true;
+                }
+            }
+        }
+
+        function getDjikstraNeighbours(currentSquareRow, currentSquareColumn) {
+            let neighbours = [];
+            if (currentSquareRow > 0) {
+                neighbours.push(findSquareByName(`${currentSquareRow-1}-${currentSquareColumn}`));
+            }
+            if (currentSquareColumn < numOfSquaresPerRow-1) {
+                neighbours.push(findSquareByName(`${currentSquareRow}-${currentSquareColumn+1}`));
+            }
+            if (currentSquareRow < numOfRows-1) {
+                neighbours.push(findSquareByName(`${currentSquareRow+1}-${currentSquareColumn}`));
+            }
+            if (currentSquareColumn > 0) {
+                neighbours.push(findSquareByName(`${currentSquareRow}-${currentSquareColumn-1}`));
+            }
+            return neighbours;
         }
 
         function updateNeighbourDistance(squareToUpdate, currentDistanceFromStart) {
@@ -140,7 +172,19 @@
             let visitedSquareIndex = (parseInt(visitedSquareRow)*numOfSquaresPerRow) + parseInt(visitedSquareColumn);
             document.getElementById(`${visitedSquareRow}-${visitedSquareColumn}`).classList.remove('unvisited');
             document.getElementById(`${visitedSquareRow}-${visitedSquareColumn}`).classList.add('visited');
-            unvisitedSquares.splice(visitedSquareIndex, 1);
+            unvisitedSquares[visitedSquareIndex] = 'visited';
+        }
+
+        function getSquareWithShortestDistance() {
+            let shortestDistanceFromStart = Infinity;
+            let smallestSquare;
+            for (let i = 0; i < unvisitedSquares.length; i++) {
+                if (unvisitedSquares[i].distanceFromStart < shortestDistanceFromStart && unvisitedSquares[i] !== 'visited') {
+                    shortestDistanceFromStart = unvisitedSquares[i].distanceFromStart;
+                    smallestSquare = unvisitedSquares[i];
+                }
+            }
+            return smallestSquare;
         }
 
 
