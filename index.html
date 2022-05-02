@@ -220,7 +220,7 @@
         }
 
         function getShortestPath(targetSquare) {
-            let currentSquare = targetSquare;
+            let currentSquare = targetSquare.parent;
 
             while (currentSquare.name !== sourceSquareId) {
                 document.getElementById(currentSquare.name).style.backgroundColor = 'yellow';
