@@ -93,6 +93,8 @@
             unvisitedSquares.push({
                 name: name,
                 distanceFromStart: Infinity,
+                parent: '',
+                visited: false,
             })
         }
 
@@ -157,16 +159,24 @@
         function getDjikstraNeighbours(currentSquareRow, currentSquareColumn) {
             let neighbours = [];
             if (currentSquareRow > 0) {
-                neighbours.push(findSquareByName(`${currentSquareRow-1}-${currentSquareColumn}`));
+                let northNeighbour = findSquareByName(`${currentSquareRow-1}-${currentSquareColumn}`);
+                northNeighbour.parent = findSquareByName(`${currentSquareRow}-${currentSquareColumn}`);
+                neighbours.push(northNeighbour);
             }
             if (currentSquareColumn < numOfSquaresPerRow-1) {
-                neighbours.push(findSquareByName(`${currentSquareRow}-${currentSquareColumn+1}`));
+                let eastNeighbour = findSquareByName(`${currentSquareRow}-${currentSquareColumn+1}`);
+                eastNeighbour.parent = findSquareByName(`${currentSquareRow}-${currentSquareColumn}`);
+                neighbours.push(eastNeighbour);
             }
             if (currentSquareRow < numOfRows-1) {
-                neighbours.push(findSquareByName(`${currentSquareRow+1}-${currentSquareColumn}`));
+                let southNeighbour = findSquareByName(`${currentSquareRow+1}-${currentSquareColumn}`);
+                southNeighbour.parent = findSquareByName(`${currentSquareRow}-${currentSquareColumn}`);
+                neighbours.push(southNeighbour);
             }
             if (currentSquareColumn > 0) {
-                neighbours.push(findSquareByName(`${currentSquareRow}-${currentSquareColumn-1}`));
+                let westNeighbour = findSquareByName(`${currentSquareRow}-${currentSquareColumn-1}`);
+                westNeighbour.parent = findSquareByName(`${currentSquareRow}-${currentSquareColumn}`);
+                neighbours.push(westNeighbour);
             }
             return neighbours;
         }
@@ -182,7 +192,7 @@
             let visitedSquareIndex = (parseInt(visitedSquareRow)*numOfSquaresPerRow) + parseInt(visitedSquareColumn);
             document.getElementById(`${visitedSquareRow}-${visitedSquareColumn}`).classList.remove('unvisited');
             document.getElementById(`${visitedSquareRow}-${visitedSquareColumn}`).classList.add('visited');
-            unvisitedSquares[visitedSquareIndex] = 'visited';
+            unvisitedSquares[visitedSquareIndex].visited = true;
         }
 
         //TODO - Figure out how to search through just the unvisited squares to find smallest instead of all including visited
@@ -190,7 +200,7 @@
             let shortestDistanceFromStart = Infinity;
             let smallestSquare;
             for (let i = 0; i < unvisitedSquares.length; i++) {
-                if (unvisitedSquares[i].distanceFromStart < shortestDistanceFromStart && unvisitedSquares[i] !== 'visited') {
+                if (unvisitedSquares[i].distanceFromStart < shortestDistanceFromStart && !unvisitedSquares[i].visited) {
                     shortestDistanceFromStart = unvisitedSquares[i].distanceFromStart;
                     smallestSquare = unvisitedSquares[i];
                 }
