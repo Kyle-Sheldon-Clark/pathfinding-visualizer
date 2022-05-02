@@ -163,28 +163,28 @@
             let neighbours = [];
             if (currentSquareRow > 0) {
                 let northNeighbour = findSquareByName(`${currentSquareRow-1}-${currentSquareColumn}`);
-                if (!northNeighbour.visited) {
+                if (!northNeighbour.visited && !document.getElementById(`${currentSquareRow-1}-${currentSquareColumn}`).classList.contains('wall')) {
                     northNeighbour.parent = findSquareByName(`${currentSquareRow}-${currentSquareColumn}`);
                     neighbours.push(northNeighbour);
                 }
             }
             if (currentSquareColumn < numOfSquaresPerRow-1) {
                 let eastNeighbour = findSquareByName(`${currentSquareRow}-${currentSquareColumn+1}`);
-                if (!eastNeighbour.visited) {
+                if (!eastNeighbour.visited && !document.getElementById(`${currentSquareRow}-${currentSquareColumn+1}`).classList.contains('wall')) {
                     eastNeighbour.parent = findSquareByName(`${currentSquareRow}-${currentSquareColumn}`);
                     neighbours.push(eastNeighbour);
                 }
             }
             if (currentSquareRow < numOfRows-1) {
                 let southNeighbour = findSquareByName(`${currentSquareRow+1}-${currentSquareColumn}`);
-                if (!southNeighbour.visited) {
+                if (!southNeighbour.visited && !document.getElementById(`${currentSquareRow+1}-${currentSquareColumn}`).classList.contains('wall')) {
                     southNeighbour.parent = findSquareByName(`${currentSquareRow}-${currentSquareColumn}`);
                     neighbours.push(southNeighbour);
                 }
             }
             if (currentSquareColumn > 0) {
                 let westNeighbour = findSquareByName(`${currentSquareRow}-${currentSquareColumn-1}`);
-                if (!westNeighbour.visited) {
+                if (!westNeighbour.visited && !document.getElementById(`${currentSquareRow}-${currentSquareColumn-1}`).classList.contains('wall')) {
                     westNeighbour.parent = findSquareByName(`${currentSquareRow}-${currentSquareColumn}`);
                     neighbours.push(westNeighbour);
                 }
