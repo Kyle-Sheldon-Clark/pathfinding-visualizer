@@ -156,6 +156,7 @@
                 }
                 markAsVisited(currentSquare);
             }
+            getShortestPath(currentSquare);
         }
 
         function getDjikstraNeighbours(currentSquareRow, currentSquareColumn) {
@@ -216,6 +217,15 @@
                 }
             }
             return smallestSquare;
+        }
+
+        function getShortestPath(targetSquare) {
+            let currentSquare = targetSquare;
+
+            while (currentSquare.name !== sourceSquareId) {
+                document.getElementById(currentSquare.name).style.backgroundColor = 'yellow';
+                currentSquare = currentSquare.parent;
+            }
         }
 
 
