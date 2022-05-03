@@ -148,7 +148,6 @@
                     break;
                 }
                 let currentSquareId = currentSquare.name.split('-');
-                document.getElementById(`${currentSquareId[0]}-${currentSquareId[1]}`).style.backgroundColor = 'purple';
                 let neighbours = getDjikstraNeighbours(parseInt(currentSquareId[0]), parseInt(currentSquareId[1]));
                 for (let i = 0; i < neighbours.length; i++) {
                     neighbours[i].distanceFromStart = 1;
@@ -196,6 +195,8 @@
             squareToUpdate.distanceFromStart = currentDistanceFromStart + squareToUpdate.distanceFromStart;
         }
 
+        let djikstraCounter = 0;
+
         function markAsVisited(visitedSquare) {
             let visitedSquareId = visitedSquare.name.split('-');
             let visitedSquareRow = visitedSquareId[0];
@@ -203,6 +204,8 @@
             let visitedSquareIndex = (parseInt(visitedSquareRow)*numOfSquaresPerRow) + parseInt(visitedSquareColumn);
             document.getElementById(`${visitedSquareRow}-${visitedSquareColumn}`).classList.remove('unvisited');
             document.getElementById(`${visitedSquareRow}-${visitedSquareColumn}`).classList.add('visited');
+            setTimeout(function () {document.getElementById(`${visitedSquareRow}-${visitedSquareColumn}`).classList.add('purple')}, djikstraCounter*40);
+            djikstraCounter++;
             unvisitedSquares[visitedSquareIndex].visited = true;
         }
 
