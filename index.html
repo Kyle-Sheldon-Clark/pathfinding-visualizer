@@ -240,14 +240,14 @@
             for (let i = 0; i < numOfRows; i++) {
                 for (let j = 0; j < numOfSquaresPerRow; j++) {
                     document.getElementById(`${i}-${j}`).classList.add('disabled');
-                    document.getElementById(`${i}-${j}`).classList.add('green');
+                    document.getElementById(`${i}-${j}`).classList.add('wall');
                 } 
             }
             let randomRow = Math.floor(Math.random()*((numOfRows-1)-1) + 1);
             let randomColumn = Math.floor(Math.random()*((numOfSquaresPerRow-1)-1) + 1);
             document.getElementById(`${randomRow}-${randomColumn}`).classList.remove('disabled');
             setTimeout(function() {
-                document.getElementById(`${randomRow}-${randomColumn}`).classList.remove('green');
+                document.getElementById(`${randomRow}-${randomColumn}`).classList.remove('wall');
                 counter += 1000;
             }, counter);
             
@@ -305,7 +305,7 @@
 
                 document.getElementById(`${selectedRow}-${selectedColumn}`).classList.remove('disabled');
                 setTimeout(function() {
-                    document.getElementById(`${selectedRow}-${selectedColumn}`).classList.remove('green');
+                    document.getElementById(`${selectedRow}-${selectedColumn}`).classList.remove('wall');
                     counter *= 2;
                 }, counter);
                 let neighbourInMaze = neighbourInfo[0][0].split('-');
@@ -331,7 +331,7 @@
             if (squareNeighboursInfo[0].length <= 1) {
                 document.getElementById(`${squareRow}-${squareColumn}`).classList.remove('disabled'); 
                 setTimeout(function() {
-                    document.getElementById(`${squareRow}-${squareColumn}`).classList.remove('green');
+                    document.getElementById(`${squareRow}-${squareColumn}`).classList.remove('wall');
                     counter *= 2;
                 }, counter);
                 for (let i = 0; i < squareNeighboursInfo[1].length; i++) {
