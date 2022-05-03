@@ -222,11 +222,17 @@
             return smallestSquare;
         }
 
+        function visualizeShortestPath(name) {
+            document.getElementById(name).classList.remove('purple');
+            document.getElementById(name).classList.add('yellow');
+        }
+
         function getShortestPath(targetSquare) {
             let currentSquare = targetSquare.parent;
 
             while (currentSquare.name !== sourceSquareId) {
-                document.getElementById(currentSquare.name).style.backgroundColor = 'yellow';
+                setTimeout(visualizeShortestPath, djikstraCounter*40, currentSquare.name);
+                djikstraCounter++;
                 currentSquare = currentSquare.parent;
             }
         }
