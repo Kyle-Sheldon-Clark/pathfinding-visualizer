@@ -14,6 +14,7 @@
         <button id="placeSourceNode">Place Source Node</button>
         <button id="placeTargetNode">Place Target Node</button>
         <button id="placeWallNode">Place Wall Node</button>
+        <input type="range" min="1" max="40" class="slider" id="speedSlider">
     </div>
     <div id="gridContainer"></div>
     <script>
@@ -26,6 +27,8 @@
         let sourceSquareId = '0-0';
         let targetNodeSelected = false;
         let targetSquareId = '5-5';
+
+        let speed = 40;
 
         let isMouseDown = false;
         document.addEventListener('mousedown', function() {isMouseDown = true;});
@@ -212,7 +215,7 @@
             document.getElementById(`${visitedSquareRow}-${visitedSquareColumn}`).classList.remove('unvisited');
             document.getElementById(`${visitedSquareRow}-${visitedSquareColumn}`).classList.add('visited');
             if (visitedSquare.name !== sourceSquareId) {
-                setTimeout(function () {document.getElementById(`${visitedSquareRow}-${visitedSquareColumn}`).classList.add('purple')}, djikstraCounter*60);
+                setTimeout(function () {document.getElementById(`${visitedSquareRow}-${visitedSquareColumn}`).classList.add('purple')}, djikstraCounter*speed);
                 djikstraCounter++;
             }
             unvisitedSquares[visitedSquareIndex].visited = true;
@@ -240,7 +243,7 @@
             let currentSquare = targetSquare.parent;
 
             while (currentSquare.name !== sourceSquareId) {
-                setTimeout(visualizeShortestPath, djikstraCounter*40, currentSquare.name);
+                setTimeout(visualizeShortestPath, djikstraCounter*speed, currentSquare.name);
                 djikstraCounter++;
                 currentSquare = currentSquare.parent;
             }
@@ -373,6 +376,10 @@
         placeWallNode.addEventListener('click', function() {
             squareToPlaceType = 'wall';
         });
+        let speedSlider = document.getElementById('speedSlider');
+        speedSlider.oninput = function() {
+            speed = 40/this.value;
+        }
         //TODO - Add animation to see every step of building prims maze
 
 
