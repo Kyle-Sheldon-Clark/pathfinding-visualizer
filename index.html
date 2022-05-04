@@ -47,6 +47,9 @@
                     square.addEventListener('mouseover', function() {
                         handleSquareClick(square);
                     });
+                    square.addEventListener('click', function() {
+                        handleSquareClick(square);
+                    });
                     row.appendChild(square);
                     buildDjikstraGraph(`${i}-${j}`);
                 }
@@ -54,13 +57,13 @@
         }
 
         function handleSquareClick(currentSquare) {
-            if (currentSquare.id === sourceSquareId) {
+            if (currentSquare.id === sourceSquareId && event.detail > 0) {
                 squareToPlaceType = 'source';
                 sourceNodeSelected = false;
                 sourceSquareId = '';
                 currentSquare.classList.remove('source');
                 document.getElementById('placeSourceNode').disabled = false;
-            } else if (squareToPlaceType === 'source') {
+            } else if (squareToPlaceType === 'source' && event.detail > 0) {
                 squareToPlaceType = 'wall';
                 sourceNodeSelected = true;
                 sourceSquareId = currentSquare.id;
@@ -69,13 +72,13 @@
                     currentSquare.classList.remove('wall');
                 }
                 document.getElementById('placeSourceNode').disabled = true;
-            } else if (currentSquare.id === targetSquareId) {
+            } else if (currentSquare.id === targetSquareId && event.detail > 0) {
                 squareToPlaceType = 'target';
                 targetNodeSelected = false;
                 targetSquareId = '';
                 currentSquare.classList.remove('target');
                 document.getElementById('placeTargetNode').disabled = false;
-            } else if (squareToPlaceType === 'target') {
+            } else if (squareToPlaceType === 'target'  && event.detail > 0) {
                 squareToPlaceType = 'wall';
                 targetNodeSelected = true;
                 targetSquareId = currentSquare.id;
