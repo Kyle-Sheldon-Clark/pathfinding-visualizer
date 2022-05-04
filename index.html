@@ -27,6 +27,10 @@
         let targetNodeSelected = false;
         let targetSquareId = '5-5';
 
+        let isMouseDown = false;
+        document.addEventListener('mousedown', function() {isMouseDown = true;});
+        document.addEventListener('mouseup', function() {isMouseDown = false;});
+
         function createGrid() {
             for (let i = 0; i < numOfRows; i++) {
                 let row = document.createElement('div');
@@ -40,7 +44,7 @@
                     square.classList.add('unvisited')
                     square.setAttribute('id', `${i}-${j}`);
                     square.disabled = false;
-                    square.addEventListener('click', function() {
+                    square.addEventListener('mouseover', function() {
                         handleSquareClick(square);
                     });
                     row.appendChild(square);
@@ -80,9 +84,9 @@
                     currentSquare.classList.remove('wall');
                 }
                 document.getElementById('placeTargetNode').disabled = true;
-            } else if (squareToPlaceType === 'wall' && !currentSquare.classList.contains('wall')) {
+            } else if (squareToPlaceType === 'wall' && !currentSquare.classList.contains('wall') && isMouseDown) {
                 currentSquare.classList.add('wall');
-            } else {
+            } else if (isMouseDown) {
                 currentSquare.classList.remove('wall');
             }
         }
@@ -204,8 +208,10 @@
             let visitedSquareIndex = (parseInt(visitedSquareRow)*numOfSquaresPerRow) + parseInt(visitedSquareColumn);
             document.getElementById(`${visitedSquareRow}-${visitedSquareColumn}`).classList.remove('unvisited');
             document.getElementById(`${visitedSquareRow}-${visitedSquareColumn}`).classList.add('visited');
-            setTimeout(function () {document.getElementById(`${visitedSquareRow}-${visitedSquareColumn}`).classList.add('purple')}, djikstraCounter*40);
-            djikstraCounter++;
+            if (visitedSquare.name !== sourceSquareId) {
+                setTimeout(function () {document.getElementById(`${visitedSquareRow}-${visitedSquareColumn}`).classList.add('purple')}, djikstraCounter*60);
+                djikstraCounter++;
+            }
             unvisitedSquares[visitedSquareIndex].visited = true;
         }
 
