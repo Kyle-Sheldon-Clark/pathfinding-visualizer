@@ -363,9 +363,15 @@
         createGrid();
         
         let startDjikstraSearch = document.getElementById('startDjikstraSearch');
-        startDjikstraSearch.addEventListener('click', djikstraSearch);
+        startDjikstraSearch.addEventListener('click', function() {
+            this.disabled = true;
+            djikstraSearch();
+        });
         let generatePrimsMaze = document.getElementById('generatePrimsMaze');
-        generatePrimsMaze.addEventListener('click', primsMaze);
+        generatePrimsMaze.addEventListener('click', function() {
+            this.disabled = true;
+            primsMaze();
+        });
         let placeSourceNode = document.getElementById('placeSourceNode');
         placeSourceNode.addEventListener('click', function() {
             squareToPlaceType = 'source';
