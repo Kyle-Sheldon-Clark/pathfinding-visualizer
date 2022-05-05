@@ -251,7 +251,7 @@
 
 
         let wallsToCheck = [];
-        let counter = 1000;
+        let counter = 0;
 
         //Biggest trouble with prims maze was getting it to work with cells as walls
         function primsMaze() {
@@ -266,8 +266,8 @@
             document.getElementById(`${randomRow}-${randomColumn}`).classList.remove('disabled');
             setTimeout(function() {
                 document.getElementById(`${randomRow}-${randomColumn}`).classList.remove('wall');
-                counter += 1000;
-            }, counter);
+            }, counter*20);
+            counter++;
             
             let currentNeighbours = getNeighbours(randomRow, randomColumn);
             for (let k = 0; k < currentNeighbours.length; k++) {
@@ -324,8 +324,8 @@
                 document.getElementById(`${selectedRow}-${selectedColumn}`).classList.remove('disabled');
                 setTimeout(function() {
                     document.getElementById(`${selectedRow}-${selectedColumn}`).classList.remove('wall');
-                    counter *= 2;
-                }, counter);
+                }, counter*20);
+                counter++;
                 let neighbourInMaze = neighbourInfo[0][0].split('-');
 
                 if (neighbourInMaze[0] > selectedRow && neighbourInfo[2].includes(`${selectedRow-1}-${selectedColumn}`)) {
@@ -350,8 +350,8 @@
                 document.getElementById(`${squareRow}-${squareColumn}`).classList.remove('disabled'); 
                 setTimeout(function() {
                     document.getElementById(`${squareRow}-${squareColumn}`).classList.remove('wall');
-                    counter *= 2;
-                }, counter);
+                }, counter*20);
+                counter++;
                 for (let i = 0; i < squareNeighboursInfo[1].length; i++) {
                     wallsToCheck.push(squareNeighboursInfo[1][i]);
                 }
