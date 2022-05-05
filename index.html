@@ -14,7 +14,8 @@
         <button id="placeSourceNode">Place Source Node</button>
         <button id="placeTargetNode">Place Target Node</button>
         <button id="placeWallNode">Place Wall Node</button>
-        <input type="range" min="1" max="40" class="slider" id="speedSlider">
+        <input type="range" min="1" max="40" class="slider" id="searchSpeedSlider">
+        <input type="range" min="1" max="40" class="slider" id="mazeSpeedSlider">
     </div>
     <div id="gridContainer"></div>
     <script>
@@ -29,6 +30,7 @@
         let targetSquareId = '5-5';
 
         let speed = 40;
+        let mazeSpeed = 40;
 
         let isMouseDown = false;
         document.addEventListener('mousedown', function() {isMouseDown = true;});
@@ -266,7 +268,7 @@
             document.getElementById(`${randomRow}-${randomColumn}`).classList.remove('disabled');
             setTimeout(function() {
                 document.getElementById(`${randomRow}-${randomColumn}`).classList.remove('wall');
-            }, counter*20);
+            }, counter*mazeSpeed);
             counter++;
             
             let currentNeighbours = getNeighbours(randomRow, randomColumn);
@@ -324,7 +326,7 @@
                 document.getElementById(`${selectedRow}-${selectedColumn}`).classList.remove('disabled');
                 setTimeout(function() {
                     document.getElementById(`${selectedRow}-${selectedColumn}`).classList.remove('wall');
-                }, counter*20);
+                }, counter*mazeSpeed);
                 counter++;
                 let neighbourInMaze = neighbourInfo[0][0].split('-');
 
@@ -350,7 +352,7 @@
                 document.getElementById(`${squareRow}-${squareColumn}`).classList.remove('disabled'); 
                 setTimeout(function() {
                     document.getElementById(`${squareRow}-${squareColumn}`).classList.remove('wall');
-                }, counter*20);
+                }, counter*mazeSpeed);
                 counter++;
                 for (let i = 0; i < squareNeighboursInfo[1].length; i++) {
                     wallsToCheck.push(squareNeighboursInfo[1][i]);
@@ -376,9 +378,14 @@
         placeWallNode.addEventListener('click', function() {
             squareToPlaceType = 'wall';
         });
-        let speedSlider = document.getElementById('speedSlider');
-        speedSlider.oninput = function() {
+        let searchSpeedSlider = document.getElementById('searchSpeedSlider');
+        searchSpeedSlider.oninput = function() {
             speed = 40/this.value;
+        }
+        let mazeSpeedSlider = document.getElementById('mazeSpeedSlider');
+        mazeSpeedSlider.oninput = function() {
+            mazeSpeed = 40/this.value;
+            console.log(mazeSpeed)
         }
         //TODO - Add animation to see every step of building prims maze
 
