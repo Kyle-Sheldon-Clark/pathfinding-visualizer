@@ -17,6 +17,7 @@
         <input type="range" min="1" max="40" class="slider" id="searchSpeedSlider">
         <input type="range" min="1" max="40" class="slider" id="mazeSpeedSlider">
         <button id="resetGrid">Reset Grid</button>
+        <button id="resetVisualization">Reset Visualization</button>
     </div>
     <div id="gridContainer"></div>
     <script>
@@ -79,6 +80,22 @@
             document.getElementById('generatePrimsMaze').disabled = false;
             document.getElementById('placeSourceNode').disabled = false;
             document.getElementById('placeTargetNode').disabled = false;
+            counter = 0;
+            djikstraCounter = 0;
+        }
+
+        function resetVisualization() {
+            unvisitedSquares = [];
+            for (let i = 0; i < numOfRows; i++) {
+                for (let j = 0; j < numOfSquaresPerRow; j++) {
+                    let square = document.getElementById(`${i}-${j}`);
+                    square.classList.remove('visited');
+                    square.classList.remove('purple');
+                    square.classList.remove('yellow');
+                    buildDjikstraGraph(`${i}-${j}`);
+                }
+            }
+            document.getElementById('startDjikstraSearch').disabled = false;
             counter = 0;
             djikstraCounter = 0;
         }
@@ -410,9 +427,13 @@
         mazeSpeedSlider.oninput = function() {
             mazeSpeed = 40/this.value;
         }
-        let gridReset = document.getElementById('resetGrid');
-        gridReset.addEventListener('click', function() {
+        let clearGrid = document.getElementById('resetGrid');
+        clearGrid.addEventListener('click', function() {
             resetGrid();
+        });
+        let clearVisualization = document.getElementById('resetVisualization');
+        clearVisualization.addEventListener('click', function() {
+            resetVisualization();
         });
         //TODO - Add animation to see every step of building prims maze
 
