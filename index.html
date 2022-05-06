@@ -61,6 +61,7 @@
         }
 
         function resetGrid() {
+            unvisitedSquares = [];
             for (let i = 0; i < numOfRows; i++) {
                 for (let j = 0; j < numOfSquaresPerRow; j++) {
                     let square = document.getElementById(`${i}-${j}`);
@@ -71,16 +72,15 @@
                     square.classList.remove('purple');
                     square.classList.remove('yellow');
                     square.classList.remove('disabled');
+                    buildDjikstraGraph(`${i}-${j}`);
                 }
             }
             document.getElementById('startDjikstraSearch').disabled = false;
             document.getElementById('generatePrimsMaze').disabled = false;
             document.getElementById('placeSourceNode').disabled = false;
             document.getElementById('placeTargetNode').disabled = false;
-            unvisitedSquares = [];
             counter = 0;
             djikstraCounter = 0;
-            createGrid();
         }
 
         function handleSquareClick(currentSquare) {
