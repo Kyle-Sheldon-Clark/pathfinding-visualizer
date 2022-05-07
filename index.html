@@ -140,6 +140,7 @@
             unvisitedSquares.push({
                 name: name,
                 distanceFromStart: Infinity,
+                distanceToTarget: Infinity,
                 parent: '',
                 visited: false,
             })
@@ -289,6 +290,44 @@
                 djikstraCounter++;
                 currentSquare = currentSquare.parent;
             }
+        }
+
+        function aStarSearch() {
+            document.getElementById(sourceSquareId).classList.add('source');
+            document.getElementById(targetSquareId).classList.add('target');
+
+            let initialSquare = findSquareByName(sourceSquareId);
+            initialSquare.distanceFromStart = 1;
+            initialSquare.distanceToTarget = getDistanceToTarget(initialSquare);
+            let initialSquareId = initialSquare.name.split('-');
+            let initialNeighbours = getDjikstraNeighbours(parseInt(initialSquareId[0]), parseInt(initialSquareId[1]));
+            for (let i = 0; i < initialNeighbours.length; i++) {
+                initialNeighbours[i].distanceFromStart = 1;
+                updateNeighbourDistance(initialNeighbours[i], initialSquare.distanceFromStart);
+                initialNeighbours[i].distanceToTarget = getDistanceToTarget(initialNeighbours[i]);
+            }
+            markAsVisited(initialSquare);
+
+            let targetFound = false;
+
+            let currentSquare;
+
+            while (!targetFound) {
+                currentSquare = getSquareWithShortestDistanceToTarget();
+                if (currentSquare.name == targetSquareId) {
+                    targetFound = true;
+                    break;
+                }
+                let currentSquareId = currentSquare.name.split('-');
+                let neighbours = getDjikstraNeighbours(parseInt(currentSquareId[0]), parseInt(currentSquareId[1]));
+                for (let i = 0; i < neighbours.length; i++) {
+                    neighbours[i].distanceFromStart = 1;
+                    updateNeighbourDistance(neighbours[i], currentSquare.distanceFromStart);
+                    neighbours[i].distanceToTarget = getDistanceToTarget(neighbours[i]);
+                }
+                markAsVisited(currentSquare);
+            }
+            getShortestPath(currentSquare);
         }
 
 
