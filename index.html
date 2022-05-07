@@ -10,6 +10,7 @@
 <body>
     <div id="toolbar">
         <button id="startDjikstraSearch">Start Djikstra Search</button>
+        <button id="startAStarSearch">Start A Star Search</button>
         <button id="generatePrimsMaze">Generate Prims Maze</button>
         <button id="placeSourceNode">Place Source Node</button>
         <button id="placeTargetNode">Place Target Node</button>
@@ -77,6 +78,7 @@
                 }
             }
             document.getElementById('startDjikstraSearch').disabled = false;
+            document.getElementById('startAStarSearch').disabled = false;
             document.getElementById('generatePrimsMaze').disabled = false;
             document.getElementById('placeSourceNode').disabled = false;
             document.getElementById('placeTargetNode').disabled = false;
@@ -96,6 +98,7 @@
                 }
             }
             document.getElementById('startDjikstraSearch').disabled = false;
+            document.getElementById('startAStarSearch').disabled = false;
             counter = 0;
             djikstraCounter = 0;
         }
@@ -463,6 +466,11 @@
         startDjikstraSearch.addEventListener('click', function() {
             this.disabled = true;
             djikstraSearch();
+        });
+        let startAStarSearch = document.getElementById('startAStarSearch');
+        startAStarSearch.addEventListener('click', function() {
+            this.disabled = true;
+            aStarSearch();
         });
         let generatePrimsMaze = document.getElementById('generatePrimsMaze');
         generatePrimsMaze.addEventListener('click', function() {
