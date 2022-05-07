@@ -330,6 +330,12 @@
             getShortestPath(currentSquare);
         }
 
+        function getDistanceToTarget(square) {
+           let squareId = getSquareRowAndColumn(square.name);
+           let targetId = getSquareRowAndColumn(targetSquareId);
+           return Math.abs(squareId[0]-targetId[0]) + Math.abs(squareId[1]-targetId[1]);
+        }
+
 
         let wallsToCheck = [];
         let counter = 0;
