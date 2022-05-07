@@ -153,6 +153,11 @@
             return unvisitedSquares[squareIndex];
         }
 
+        function getSquareRowAndColumn(squareName) {
+            let squareId = squareName.split('-');
+            return squareId;
+        }
+
 
         //biggest difficulty keeping track of unvisited squares and being able to find a given square without searching through entire array
         //Accomplished this by marking squares as visited in unvisited array and finding it in the array with the index using the equation (squareRow*numberOfSquareRows)+squareColumn
