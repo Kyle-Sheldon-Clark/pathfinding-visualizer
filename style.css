@@ -18,6 +18,10 @@ body {
     display: inline-block;
 }
 
+.algorithmsDropdown button {
+    width: 10rem;
+}
+
 .algorithmsDropdownContent {
     display: none;
     position: absolute;
@@ -25,6 +29,25 @@ body {
 }
 
 .algorithmsDropdown:hover .algorithmsDropdownContent {
+    display: block;
+}
+
+.mazeDropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.mazeDropdown button {
+    width: 10rem;
+}
+
+.mazeDropdownContent {
+    display: none;
+    position: absolute;
+    z-index: 1;
+}
+
+.mazeDropdown:hover .mazeDropdownContent {
     display: block;
 }
 
