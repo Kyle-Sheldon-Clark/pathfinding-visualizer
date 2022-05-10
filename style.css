@@ -13,6 +13,21 @@ body {
     height: 15vh;
 }
 
+.algorithmsDropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.algorithmsDropdownContent {
+    display: none;
+    position: absolute;
+    z-index: 1;
+}
+
+.algorithmsDropdown:hover .algorithmsDropdownContent {
+    display: block;
+}
+
 button {
     background-color: rgb(251, 248, 204);
     border: 1px solid black;
