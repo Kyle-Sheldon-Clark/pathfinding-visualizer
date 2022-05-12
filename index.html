@@ -142,9 +142,9 @@
                     currentSquare.classList.remove('wall');
                 }
                 document.getElementById('placeTargetNode').disabled = true;
-            } else if (squareToPlaceType === 'wall' && !currentSquare.classList.contains('wall') && isMouseDown || event.detail > 0) {
+            } else if (squareToPlaceType === 'wall' && !currentSquare.classList.contains('wall') && (isMouseDown || event.detail > 0)) {
                 currentSquare.classList.add('wall');
-            } else if (isMouseDown) {
+            } else if (isMouseDown || event.detail > 0) {
                 currentSquare.classList.remove('wall');
             }
         }
