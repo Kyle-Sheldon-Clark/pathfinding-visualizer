@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -6,6 +8,7 @@
 body {
     overflow: hidden;
     background-color: rgb(251, 248, 204);
+    font-family: 'Roboto', sans-serif;
 }
 
 #toolbar {
@@ -62,6 +65,7 @@ button {
     border: 1px solid black;
     border-radius: 5px;
     padding: 1em;
+    font-family: 'Roboto', sans-serif;
 }
 
 button:hover {
