@@ -9,25 +9,26 @@
 </head>
 <body>
     <div id="toolbar">
-        <div class="algorithmsDropdown">
-            <button class="algorithmsDropdownBtn">Algorithms</button>
-            <div class="algorithmsDropdownContent">
-                <button id="startDjikstraSearch">Start Djikstra Search</button>
-                <button id="startAStarSearch">Start A Star Search</button>
+        <div class="buttons">
+            <div class="algorithmsDropdown">
+                <button class="algorithmsDropdownBtn">Algorithms</button>
+                <div class="algorithmsDropdownContent">
+                    <button id="startDjikstraSearch">Start Djikstra Search</button>
+                    <button id="startAStarSearch">Start A Star Search</button>
+                </div>
             </div>
-        </div>
-        <div class="mazeDropdown">
-            <button class="mazeDropdownBtn">Maze</button>
-            <div class="mazeDropdownContent">
-                <button id="generatePrimsMaze">Generate Prims Maze</button>
+            <div class="mazeDropdown">
+                <button class="mazeDropdownBtn">Maze</button>
+                <div class="mazeDropdownContent">
+                    <button id="generatePrimsMaze">Generate Prims Maze</button>
+                </div>
             </div>
+            <button id="placeSourceNode">Place Source Node</button>
+            <button id="placeTargetNode">Place Target Node</button>
+            <button id="placeWallNode">Place Wall Node</button>
+            <button id="resetGrid">Reset Grid</button>
+            <button id="resetVisualization">Reset Visualization</button>
         </div>
-        <button id="placeSourceNode">Place Source Node</button>
-        <button id="placeTargetNode">Place Target Node</button>
-        <button id="placeWallNode">Place Wall Node</button>
-        <button id="resetGrid">Reset Grid</button>
-        <button id="resetVisualization">Reset Visualization</button>
-        </br>
         <label for="searchSpeedSlider">Change Search Speed: </label>
         <input type="range" min="1" max="40" class="slider" id="searchSpeedSlider">
         <label for="mazeSpeedSlider">Change Maze Visualization Speed:</label>

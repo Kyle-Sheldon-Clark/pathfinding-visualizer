@@ -13,6 +13,12 @@ body {
     height: 15vh;
 }
 
+.buttons {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
 .algorithmsDropdown {
     position: relative;
     display: inline-block;
@@ -70,6 +76,7 @@ button:disabled {
     appearance: none;
     border: 1px solid black;
     background-color: rgb(251, 248, 204);
+    margin-top: 1.5rem;
 }
 
 .slider::-webkit-slider-thumb {
