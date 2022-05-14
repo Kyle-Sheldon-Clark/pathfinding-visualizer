@@ -9,6 +9,7 @@
 </head>
 <body>
     <div id="toolbar">
+        <h1 class="title">Pathfinding Visualizer</h1>
         <div class="buttons">
             <div class="algorithmsDropdown">
                 <button class="algorithmsDropdownBtn">Algorithms</button>
@@ -29,14 +30,20 @@
             <button id="resetGrid">Reset Grid</button>
             <button id="resetVisualization">Reset Visualization</button>
         </div>
-        <label for="searchSpeedSlider">Change Search Speed: </label>
-        <input type="range" min="1" max="40" class="slider" id="searchSpeedSlider">
-        <label for="mazeSpeedSlider">Change Maze Visualization Speed:</label>
-        <input type="range" min="1" max="40" class="slider" id="mazeSpeedSlider">
+        <div class="speedSliders">
+            <div class="searchSpeedSliderContainer">
+                <label for="searchSpeedSlider">Change Search Speed: </label>
+                <input type="range" min="1" max="40" class="slider" id="searchSpeedSlider">
+            </div>
+            <div class="mazeSpeedSliderContainer">
+                <label for="mazeSpeedSlider">Change Maze Visualization Speed:</label>
+                <input type="range" min="1" max="40" class="slider" id="mazeSpeedSlider">
+            </div>
+        </div>
     </div>
     <div id="gridContainer"></div>
     <script>
-        let numOfRows = 40;
+        let numOfRows = 30;
         let toolbarHeight = document.getElementById('toolbar').clientHeight;
         let squareWidth = (window.innerHeight-toolbarHeight)/numOfRows;
         let numOfSquaresPerRow = Math.floor((window.innerWidth/squareWidth));
